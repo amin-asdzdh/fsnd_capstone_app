@@ -5,10 +5,27 @@ The Casting Agency project simulates a company that produces films and manages t
 
 ## Getting Started
 
+### Initial Setup
 Create a virtual environment and install all requirements
 ```
 python3 -m venv .venv_casting_agency
 source .venv_casting_agency/bin/activate
 
 pip install -r requirements.txt
+```
+
+### Database Setup
+
+```
+# create a database
+createdb casting_agency_db
+
+# Initialise flask-migrate
+flask db init
+flask db migrate -m "Initial schema"
+```
+
+To apply migrations to the database
+```
+flask db upgrade
 ```
