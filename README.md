@@ -29,3 +29,14 @@ To apply migrations to the database
 ```
 flask db upgrade
 ```
+
+To generate new migration script
+```
+flask db migrate -m "Describe your change"
+flask db upgrade
+```
+
+# TODO define models
+# TODO setup apis
+# TODO setup tests
+# TODO setup auth0 and permissions
