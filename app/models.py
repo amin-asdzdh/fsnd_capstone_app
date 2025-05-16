@@ -1,6 +1,13 @@
-from sqlalchemy import Column, String, Integer, DateTime, ForeignKey
+from sqlalchemy import Column, String, Integer, DateTime
 from sqlalchemy.orm import relationship
 from app import db
+
+
+actor_movie = db.Table(
+    "actor_movie",
+    db.Column("actor_id", db.Integer, db.ForeignKey("actors.id", ondelete="CASCADE"), primary_key=True),
+    db.Column("movie_id", db.Integer, db.ForeignKey("movies.id", ondelete="CASCADE"), primary_key=True),
+)
 
 
 class Movie(db.Model):
@@ -12,8 +19,8 @@ class Movie(db.Model):
 
     actors = relationship(
         "Actor",
-        back_populates="movie",
-        cascade="all, delete-orphan",
+        secondary=actor_movie,
+        back_populates="movies",
         lazy="selectin"
     )
 
@@ -21,7 +28,7 @@ class Movie(db.Model):
         return {
             "id": self.id,
             "title": self.title,
-            "release_date": self.release_date.isoformat() if self.release_date else None,
+            "release_date": self.release_date.isoformat(),
             "actors": [actor.format() for actor in self.actors]
         }
 
@@ -37,8 +44,12 @@ class Actor(db.Model):
     age = Column(Integer, nullable=False)
     gender = Column(String(16), nullable=False)
 
-    movie_id = Column(Integer, ForeignKey("movies.id", ondelete="CASCADE"), nullable=True)
-    movie = relationship("Movie", back_populates="actors")
+    movies = relationship(
+        "Movie",
+        secondary=actor_movie,
+        back_populates="actors",
+        lazy="selectin"
+    )
 
     def format(self):
         return {
@@ -46,7 +57,7 @@ class Actor(db.Model):
             "name": self.name,
             "age": self.age,
             "gender": self.gender,
-            "movie_id": self.movie_id
+            "movies": [movie.id for movie in self.movies]
         }
 
     def __repr__(self):

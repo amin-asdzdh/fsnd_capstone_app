@@ -36,6 +36,21 @@ flask db migrate -m "Describe your change"
 flask db upgrade
 ```
 
+To roll back migrations
+```
+# to the most recent migration
+flask db downgrade
+
+# to a specific version
+flask db downgrade <revision_hash>
+```
+
+You can get some dummy data loaded to the database using the psql file in the repo
+```
+createdb casting_agency_db
+psql casting_agency_db < casting_agency_db.psql
+```
+
 # TODO define models
 # TODO setup apis
 # TODO setup tests
