@@ -4,10 +4,9 @@ from flask_cors import CORS
 from flask_migrate import Migrate
 
 from .config import DevelopmentConfig, TestingConfig, ProductionConfig
+from .extensions import db, migrate
+from .routes.actors import actors_bp
 
-
-db = SQLAlchemy()
-migrate = Migrate()
 
 def create_app(config_class=DevelopmentConfig):
     app = Flask(__name__)
@@ -18,6 +17,10 @@ def create_app(config_class=DevelopmentConfig):
     migrate.init_app(app, db)
     CORS(app, resources={r"/api/*": {"origins": "*"}})
 
-    # TODO … register blueprints, error handlers, etc.
+    app.register_blueprint(actors_bp, url_prefix='/actors')
+
+    @app.route('/')
+    def index():
+        return jsonify({"message": "Welcome to the Casting Agency API"})
 
     return app
