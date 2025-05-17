@@ -57,6 +57,139 @@ To run tests
 python -m unittest discover -s tests
 ```
 
+# API Documentation
+This project exposes RESTful endpoints for managing Actors and Movies.
+
+### Actors API
+GET /actors/
+Returns a list of all actors.
+
+Response:
+```
+{
+  "success": true,
+  "actors": [
+    {
+      "id": 1,
+      "name": "John Doe",
+      "age": 35,
+      "gender": "male",
+      "movies": [1, 2]
+    },
+    ...
+  ]
+}
+```
+
+POST /actors/
+Creates a new actor.
+
+
+Request Body (JSON):
+```
+{
+  "name": "Jane Smith",
+  "age": 28,
+  "gender": "female"
+}
+```
+
+Response:
+```
+{
+  "success": true,
+  "actor": {
+    "id": 4,
+    "name": "Jane Smith",
+    "age": 28,
+    "gender": "female",
+    "movies": []
+  }
+}
+```
+
+Error Codes:
+```
+- 400 – Invalid or missing data
+```
+
+PATCH /actors/<int:actor_id>
+Updates an existing actor’s attributes.
+
+Request Body (JSON):
+```
+{
+  "name": "Updated Name",
+  "age": 40
+}
+```
+
+Response:
+```
+{
+  "success": true,
+  "actor": {
+    "id": 1,
+    "name": "Updated Name",
+    "age": 40,
+    "gender": "male",
+    "movies": [1]
+  }
+}
+```
+
+Error Codes:
+```
+- 404 – Actor not found
+- 400 – Invalid payload
+```
+
+DELETE /actors/<int:actor_id>
+Deletes an actor by ID.
+
+Response:
+```
+{
+  "success": true,
+  "deleted": 1
+}
+```
+
+Error Codes:
+```
+- 404 – Actor not found
+- 500 – Deletion failed
+```
+
+## Movies API
+
+GET /movies/
+Returns a list of all movies.
+
+Response:
+```
+{
+  "success": true,
+  "movies": [
+    {
+      "id": 1,
+      "title": "Inception",
+      "release_date": "2010-07-16T00:00:00",
+      "actors": [
+        {
+          "id": 1,
+          "name": "Leonardo DiCaprio",
+          "age": 48,
+          "gender": "male",
+          "movies": [1]
+        }
+      ]
+    },
+    ...
+  ]
+}
+```
+
 
 # DATA MODELING
 # TODO build Flask endpoints following REST principles (GET, POST, PATCH, DELETE)
@@ -105,3 +238,5 @@ python -m unittest discover -s tests
 #   - Auth0 setup (reference setup.sh or .env)
 #   - API endpoint documentation (routes, methods, sample responses)
 #   - Defined RBAC permissions per role
+
+
