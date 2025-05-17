@@ -51,6 +51,13 @@ createdb casting_agency_db
 psql casting_agency_db < casting_agency_db.psql
 ```
 
+## Running the App
+```
+export FLASK_APP=app
+export FLASK_ENV=development
+flask run --reload
+```
+
 ## Running Tests
 To run tests
 ```
@@ -191,16 +198,6 @@ Response:
 ```
 
 
-# DATA MODELING
-# TODO build Flask endpoints following REST principles (GET, POST, PATCH, DELETE)
-# TODO implement at least 2 GET, 1 POST, 1 PATCH, 1 DELETE routes
-# TODO add @app.errorhandler handlers for 400, 401, 404, 422 errors with JSON responses
-
-# API ARCHITECTURE
-# TODO build Flask endpoints following REST principles (GET, POST, PATCH, DELETE)
-# TODO implement at least 2 GET, 1 POST, 1 PATCH, 1 DELETE routes
-# TODO add @app.errorhandler handlers for 400, 401, 404, 422 errors with JSON responses
-
 # AUTHENTICATION / RBAC
 # TODO configure Auth0 application (Domain, Client ID, API audience)
 # TODO create at least 2 roles in Auth0 with distinct permissions
@@ -210,9 +207,6 @@ Response:
 #   - check permissions and error if invalid/expired
 
 # TESTING
-# TODO write unittest cases for each endpoint:
-#   - test success case
-#   - test failure case
 # TODO test at least 2 role-based access control scenarios per role
 
 # DEPLOYMENT
@@ -221,22 +215,12 @@ Response:
 # TODO document live API URL and Auth0 setup steps in README
 
 # CODE QUALITY AND DOCUMENTATION
-# TODO ensure all code follows PEP8 (flake8 or black)
-# TODO name variables/functions clearly and consistently
-# TODO add inline comments where logic is non-obvious
 # TODO store secrets (Auth0 config, DB URL) as env vars
-# TODO keep code DRY — avoid duplication
-# TODO use consistent formatting and logical endpoint naming
-# TODO verify app runs with no unhandled errors
 
 # README CONTENT
 # TODO write a project README including:
-#   - Project motivation
 #   - Hosted API base URL
-#   - How to install dependencies
 #   - How to run app locally
 #   - Auth0 setup (reference setup.sh or .env)
-#   - API endpoint documentation (routes, methods, sample responses)
 #   - Defined RBAC permissions per role
-
 

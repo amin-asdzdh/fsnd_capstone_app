@@ -5,6 +5,7 @@ from .config import DevelopmentConfig, ProductionConfig
 from .extensions import db, migrate
 from .routes.actors import actors_bp
 from .routes.movies import movies_bp
+from .errors import register_error_handlers
 
 
 def create_app(config_class=DevelopmentConfig):
@@ -18,6 +19,7 @@ def create_app(config_class=DevelopmentConfig):
 
     app.register_blueprint(actors_bp, url_prefix='/actors')
     app.register_blueprint(movies_bp, url_prefix='/movies')
+    register_error_handlers(app)
 
     @app.route('/')
     def index():

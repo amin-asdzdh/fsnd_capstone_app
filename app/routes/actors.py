@@ -1,4 +1,6 @@
 from flask import Blueprint, jsonify, request, abort
+from sqlalchemy.exc import IntegrityError
+
 from ..models import Actor, db
 
 actors_bp = Blueprint('actors', __name__)
@@ -13,11 +15,17 @@ def actors_get():
 @actors_bp.route('/', methods=['POST'])
 def actors_post():
     data = request.get_json()
+    if not data:
+        # malformed/missing JSON
+        abort(400)
     try:
         actor = Actor(**data)
         db.session.add(actor)
         db.session.commit()
         return jsonify({"success": True, "actor": actor.format()})
+    except IntegrityError:
+        db.session.rollback()
+        abort(422)
     except Exception:
         db.session.rollback()
         abort(400)
