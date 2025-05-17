@@ -1,9 +1,7 @@
 from flask import Flask, jsonify
-from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
-from flask_migrate import Migrate
 
-from .config import DevelopmentConfig, TestingConfig, ProductionConfig
+from .config import DevelopmentConfig, ProductionConfig
 from .extensions import db, migrate
 from .routes.actors import actors_bp
 
