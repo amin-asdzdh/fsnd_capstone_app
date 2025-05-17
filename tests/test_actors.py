@@ -43,6 +43,28 @@ class ActorsTestCase(unittest.TestCase):
         self.assertTrue(data["success"])
         self.assertEqual(data["actor"]["name"], "Chad")
 
+    def test_delete_actor(self):
+        """Test DELETE /actors/<id> deletes the actor."""
+
+        with self.app.app_context():
+            actor = Actor(name="To Delete", age=40, gender="male")
+            db.session.add(actor)
+            db.session.commit()
+            actor_id = actor.id
+
+            actors = Actor.query.all()
+            self.assertEqual(len(actors), 1)
+
+        res = self.client.delete(f"/actors/{actor_id}")
+        data = res.get_json()
+
+        self.assertEqual(res.status_code, 200)
+        self.assertTrue(data["success"])
+        self.assertEqual(data["deleted"], actor_id)
+
+        with self.app.app_context():
+            self.assertIsNone(Actor.query.get(actor_id))
+
 
 if __name__ == "__main__":
     unittest.main()

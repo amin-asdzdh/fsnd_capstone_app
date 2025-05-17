@@ -21,3 +21,17 @@ def actors_post():
     except Exception:
         db.session.rollback()
         abort(400)
+
+@actors_bp.route('/<int:actor_id>', methods=['DELETE'])
+def actors_delete(actor_id):
+    actor = Actor.query.get(actor_id)
+    if not actor:
+        abort(404)
+
+    try:
+        db.session.delete(actor)
+        db.session.commit()
+        return jsonify({"success": True, "deleted": actor_id})
+    except Exception:
+        db.session.rollback()
+        abort(500)
