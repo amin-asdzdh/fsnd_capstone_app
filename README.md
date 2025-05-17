@@ -51,6 +51,13 @@ createdb casting_agency_db
 psql casting_agency_db < casting_agency_db.psql
 ```
 
+## Running Tests
+To run tests
+```
+python -m unittest discover -s tests
+```
+
+
 # DATA MODELING
 # TODO build Flask endpoints following REST principles (GET, POST, PATCH, DELETE)
 # TODO implement at least 2 GET, 1 POST, 1 PATCH, 1 DELETE routes

@@ -65,6 +65,31 @@ class ActorsTestCase(unittest.TestCase):
         with self.app.app_context():
             self.assertIsNone(Actor.query.get(actor_id))
 
+    def test_patch_actor(self):
+        """Test PATCH /actors/<id> updates the actor's attributes."""
+
+        with self.app.app_context():
+            actor = Actor(name="Original", age=35, gender="female")
+            db.session.add(actor)
+            db.session.commit()
+            actor_id = actor.id
+
+        update_payload = {"name": "Updated", "age": 36}
+
+        res = self.client.patch(f"/actors/{actor_id}", json=update_payload)
+        data = res.get_json()
+
+        self.assertEqual(res.status_code, 200)
+        self.assertTrue(data["success"])
+        self.assertEqual(data["actor"]["id"], actor_id)
+        self.assertEqual(data["actor"]["name"], "Updated")
+        self.assertEqual(data["actor"]["age"], 36)
+
+        with self.app.app_context():
+            updated_actor = Actor.query.get(actor_id)
+            self.assertEqual(updated_actor.name, "Updated")
+            self.assertEqual(updated_actor.age, 36)
+
 
 if __name__ == "__main__":
     unittest.main()

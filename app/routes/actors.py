@@ -35,3 +35,24 @@ def actors_delete(actor_id):
     except Exception:
         db.session.rollback()
         abort(500)
+
+@actors_bp.route('/<int:actor_id>', methods=['PATCH'])
+def actors_patch(actor_id):
+    actor = Actor.query.get(actor_id)
+    if not actor:
+        abort(404)
+
+    data = request.get_json()
+    try:
+        if "name" in data:
+            actor.name = data["name"]
+        if "age" in data:
+            actor.age = data["age"]
+        if "gender" in data:
+            actor.gender = data["gender"]
+
+        db.session.commit()
+        return jsonify({"success": True, "actor": actor.format()})
+    except Exception:
+        db.session.rollback()
+        abort(400)
