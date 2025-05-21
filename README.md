@@ -196,31 +196,3 @@ Response:
   ]
 }
 ```
-
-
-# AUTHENTICATION / RBAC
-# TODO configure Auth0 application (Domain, Client ID, API audience)
-# TODO create at least 2 roles in Auth0 with distinct permissions
-# TODO implement @requires_auth(permission) decorator:
-#   - extract token from header
-#   - decode/verify JWT
-#   - check permissions and error if invalid/expired
-
-# TESTING
-# TODO test at least 2 role-based access control scenarios per role
-
-# DEPLOYMENT
-# TODO deploy Flask app to Heroku/Render
-# TODO set Auth0 config in deployment environment (.env or startup script)
-# TODO document live API URL and Auth0 setup steps in README
-
-# CODE QUALITY AND DOCUMENTATION
-# TODO store secrets (Auth0 config, DB URL) as env vars
-
-# README CONTENT
-# TODO write a project README including:
-#   - Hosted API base URL
-#   - How to run app locally
-#   - Auth0 setup (reference setup.sh or .env)
-#   - Defined RBAC permissions per role
-
